@@ -1,5 +1,6 @@
 0x00. AirBnB clone - The console
 
+![The AirBnB](github.com/Lagat100/Clone_Air/tree/master/images/hbnb.png)
 
 Welcome to the AirBnB clone project!
 
