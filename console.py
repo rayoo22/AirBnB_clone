@@ -97,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
             print(new_list)
 
 
-    def do_update(self, arg):
+    def do_update(self, line):
         """Updates an instance of BaseModel based on name and id"""
         clargs = shlex.split(line)
         models.storage.reload()
@@ -165,6 +165,11 @@ class HBNBCommand(cmd.Cmd):
                 ln = list(shlex(args))
                 ln[0] = ln[0].strip('"')
                 self.do_update(" ".join([clsname, objid, ln[0], ln[1]]))
+
+    def handle_dict(self, clsname, objid, d):
+        """handles dictionary update"""
+        for key, value in d.items():
+            self.do_update(" ".join([clsname, objid, str(key), str(value)]))
 
     @staticmethod
     def count_class(clsname):
