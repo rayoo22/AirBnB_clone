@@ -4,6 +4,7 @@ import cmd
 import json
 import models
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -30,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         args = arg.split()
-        if args[0] not in ["BaseModel"]:
+        if args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -51,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             return
         
         args = arg.split()
-        if args[0] not in ["BaseModel"]:
+        if args[0] not in ["BaseModel", "User"]
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -73,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
             return
         
         args = arg.split()
-        if args[0] not in ["BaseModel"]:
+        if args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
 
@@ -88,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         args = arg.split()
-        if args[0] not in ["BaseModel"]:
+        if args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
