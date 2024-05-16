@@ -5,6 +5,11 @@ import json
 import models
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -13,10 +18,11 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     def do_create(self, arg):
-        """ createas an instance of BaseModel """
+        """ creates an instance of BaseModel """
         if not arg:
             print("** class name missing **")
             return
+
         try:
             new_instance = eval(arg)()
             new_instance.save()
@@ -31,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         args = arg.split()
-        if args[0] not in ["BaseModel", "User"]:
+        if args[0] not in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -52,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
             return
         
         args = arg.split()
-        if args[0] not in ["BaseModel", "User"]
+        if args[0] not in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -73,14 +79,17 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         
-        args = arg.split()
-        if args[0] not in ["BaseModel", "User"]:
+        class_name = arg.split()
+        if class_name not in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
             print("** class doesn't exist **")
             return
 
-        storage = models.storage.all()
-        objects = [str(obj) for obj in storage.values() if type(obj).__name__ == args[0]]
-        print(objects)
+        try:
+            all_instances = eval(class_name).all()
+            objects = [str(obj) for obj in all_instances]
+            print(objects)
+        except NameError:
+            print("** class doesn't exist **")
 
     def do_update(self, arg):
         """Updates an instance of BaseModel based on name and id"""
@@ -89,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         args = arg.split()
-        if args[0] not in ["BaseModel", "User"]:
+        if args[0] not in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
