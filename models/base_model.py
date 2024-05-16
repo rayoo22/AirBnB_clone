@@ -50,3 +50,10 @@ class BaseModel:
             else:
                 dict[k] = v
         return dict
+
+    @classmethod
+    def all(cls):
+        """Returns a list of all instnaces of the class"""
+        from models import storage
+        instances = storage.all().values()
+        return [instance for instance in instances if isinstance(instance, cls)]
