@@ -166,7 +166,14 @@ class HBNBCommand(cmd.Cmd):
                 ln[0] = ln[0].strip('"')
                 self.do_update(" ".join([clsname, objid, ln[0], ln[1]]))
 
-
+    @staticmethod
+    def count_class(clsname):
+        """count number of object of a certain class"""
+        c = 0
+        for key, value in models.storage.all().items():
+            if type(value).__name__ == clsname:
+                c += 1
+        return (c)
 
 
 
