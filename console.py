@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""console module"""
+"""
+This module contains the entry point of the command interpreter.
+"""
+
 import cmd
 import json
 import shlex
@@ -15,13 +18,19 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """entry point of the command interpreter"""
+    """
+    This class is the entry point of the command interpreter.
+    """
 
     prompt = '(hbnb) '
-    classes = {"BaseModel": BaseModel, "User": User, "State": State, "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
+    classes = {"BaseModel": BaseModel, "User": User, "State": State,
+               "City": City, "Amenity": Amenity, "Place": Place,
+               "Review": Review}
 
     def do_create(self, clsname=None):
-        """ creates an instance of BaseModel """
+        """
+        Creates an instance of BaseModel.
+        """
         if not clsname:
             print("** class name missing **")
 
@@ -29,12 +38,14 @@ class HBNBCommand(cmd.Cmd):
             print('** class doesn\'t exist **')
 
         else:
-            obj = self.classes[clsname]()
+            obj = self.classesclsname
             models.storage.save()
             print(obj.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance"""
+        """
+        Prints the string representation of an instance.
+        """
         clsname, objid = None, None
         args = arg.split(' ')
         if len(args) > 0:
@@ -47,7 +58,6 @@ class HBNBCommand(cmd.Cmd):
             print('** instance id missing **')
         elif not self.classes.get(clsname):
             print('** class doesn\'t exist **')
-            
         else:
             k = clsname + "." + objid
             obj = models.storage.all().get(k)
@@ -55,10 +65,11 @@ class HBNBCommand(cmd.Cmd):
                 print('**no instance found **')
             else:
                 print(obj)
-        
 
     def do_destroy(self, line):
-        """ deletes an instance of BaseModel based on class name and id """
+        """
+        Deletes an instance of BaseModel based on class name and id.
+        """
         clargs = line.split()
         if len(clargs) == 0:
             print("** class name missing **")
@@ -75,7 +86,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, line):
-        """ prints all string representation of BaseModel instances"""
+        """
+        Prints all string representation of BaseModel instances.
+        """
         clargs = line.split()
         new_list = []
 
@@ -96,9 +109,10 @@ class HBNBCommand(cmd.Cmd):
                 new_list.append(str(models.storage.all()[key]))
             print(new_list)
 
-
     def do_update(self, line):
-        """Updates an instance of BaseModel based on name and id"""
+        """
+        Updates an instance of BaseModel based on name and id.
+        """
         clargs = shlex.split(line)
         models.storage.reload()
         nova_dict = models.storage.all()
@@ -125,7 +139,9 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
 
     def default(self, line):
-        """ handles class commands """
+        """
+        Handles class commands.
+        """
         ln = line.split('.', 1)
         if len(ln) < 2:
             print('*** Unknown syntax:', ln[0])
@@ -167,33 +183,42 @@ class HBNBCommand(cmd.Cmd):
                 self.do_update(" ".join([clsname, objid, ln[0], ln[1]]))
 
     def handle_dict(self, clsname, objid, d):
-        """handles dictionary update"""
+        """
+        Handles dictionary update.
+        """
         for key, value in d.items():
             self.do_update(" ".join([clsname, objid, str(key), str(value)]))
 
     @staticmethod
     def count_class(clsname):
-        """count number of object of a certain class"""
+        """
+        Counts the number of objects of a certain class.
+        """
         c = 0
         for key, value in models.storage.all().items():
             if type(value).__name__ == clsname:
                 c += 1
         return (c)
 
-
-
     def do_quit(self, arg):
-        """Quit command to exit the program"""
+        """
+        Quit command to exit the program.
+        """
         return True
 
     def do_EOF(self, arg):
-        """implemeting quit and EOF to exit program"""
-        print() # prints a new line before exiting
+        """
+        EOF command to exit the program.
+        """
+        print()  # prints a new line before exiting
         return True
 
     def emptyline(self):
-        """called when an empty line is entered"""
+        """
+        Called when an empty line is entered.
+        """
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
