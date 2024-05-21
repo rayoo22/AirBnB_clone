@@ -5,6 +5,7 @@ from uuid import uuid4
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """
     BaseModel is a base class that defines
@@ -18,7 +19,8 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, key,
+                            datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
                 elif key != '__class__':
                     setattr(self, key, value)
         else:
@@ -30,7 +32,8 @@ class BaseModel:
         """
         Returns a string representation of the instance
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
         """
@@ -56,5 +59,5 @@ class BaseModel:
         Class method that returns a list of all instances
             of the class from models.storage.
         """
-        return [instance for instance in models.storage.all().values() if isinstance(instance, cls)]
-
+        return [instance for instance in models.storage.all().values()
+                if isinstance(instance, cls)]

@@ -47,4 +47,5 @@ class FileStorage:
 
     def all_classes(self):
         """Returns a list of all class names"""
-        return ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+        return ['BaseModel', 'User', 'State',
+                'City', 'Amenity', 'Place', 'Review']
